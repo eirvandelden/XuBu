@@ -209,6 +209,12 @@
     %\setlength{\headsep}{1mm}
     \setlength{\footskip}{7mm}
 
+% Define a new pagestyle called 'pagenumber'
+\makepagestyle{pagenumber}
+\makeoddfoot{pagenumber}{}{}{\thepage}
+\makeevenfoot{pagenumber}{}{}{\thepage}
+
+
 \pagestyle{mystyle} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -230,8 +236,52 @@
     \quad\raisebox{40pt}\raggedright\chaptitlefont\color{appleblue}\parbox[t]{\textwidth-3cm}{\raggedright ##1}\thispagestyle{empty} }
 }
 
+% Define a new chapterstyle called 'seprama'
+\makeatletter
 
-\chapterstyle{appleChap}
+\newlength\dlf@normtxtw
+\setlength\dlf@normtxtw{\textwidth}
+\def\myhelvetfont{\def\sfdefault{mdput}}
+\newsavebox{\feline@chapter}
+
+\newcommand\feline@chapter@marker[1][2cm]{%
+  \sbox\feline@chapter{%
+    \resizebox{!}{#1}{\fboxsep=2pt  %
+      \colorbox{lightblue}{\color{white}\bfseries\sffamily\thechapter}% 
+    }}%
+  %\rotatebox{90}{%
+  %  \resizebox{%
+  %    \heightof{\usebox{\feline@chapter}}+\depthof{\usebox{\feline@chapter}}}%
+  %  {!}{\scshape\so\@chapapp}}\quad%
+  \raisebox{\depthof{\usebox{\feline@chapter}}}{\usebox{\feline@chapter}}%
+}
+
+\newcommand\feline@chm[1][2cm]{%
+  \sbox\feline@chapter{\feline@chapter@marker[#1]}%
+  \makebox[0pt][l]{% aka \rlap
+    \makebox[1cm][r]{\usebox\feline@chapter}%
+  }}
+  
+\makechapterstyle{seprama}{
+    \openany
+    
+    \setlength{\beforechapskip}{-40pt}
+    \setlength{\midchapskip}{-40pt}                                    %Moves the chapter title 
+    \setlength{\afterchapskip}{40pt}
+  \renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so}
+  \renewcommand\chaptitlefont{\normalfont \fontsize{18}{18} \bfseries\scshape}
+  \renewcommand\chapternamenum{}
+  \renewcommand\printchaptername{}
+  \renewcommand\printchapternum{\null\feline@chm[1cm]\par}  
+    \renewcommand\afterchapternum{\par\vskip\midchapskip}
+    \renewcommand\printchaptertitle[1]{\chaptitlefont \hspace{1.2cm}  ##1 \thispagestyle{empty}}
+}
+\makeatother
+\chapterstyle{seprama}
+
+
+
+%\chapterstyle{appleChap}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
