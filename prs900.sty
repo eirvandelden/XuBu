@@ -1,0 +1,289 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% Author: Etienne van Delden
+%% Description: Package to recreate the Apple Style of 
+%%  formatting used in their guides. Also changes the 
+%%  size to that of an Sony Reader Daily Edition
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ProvidesPackage{prs900}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Dependencies
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[T1]{fontenc}
+\usepackage{cmbright}
+\usepackage{xcolor}
+\usepackage{calc}
+\usepackage[pdftex, colorlinks=true, linkcolor=black, urlcolor=blue]{hyperref}
+\usepackage[paperwidth=91mm, paperheight=155mm, hmargin={0.3cm, 0.3cm}, vmargin={1cm, 1cm}]{geometry}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Page Display
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\parindent 0mm 
+%\parskip 0.5em plus 1pt
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Colour Definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{appleblue}{rgb}{0,0.43,0.67}
+\definecolor{lightblue}{rgb}{.44,.59,.87}
+\definecolor{numbercolor}{gray}{0.7}
+\definecolor{mdarkgreen}{cmyk}{.44,.28,.92,.55}
+\definecolor{mgreen}{cmyk}{.12,.06,.23,0}
+\definecolor{agreen}{cmyk}{.37,.23,.92,.35}
+\definecolor{pgreen}{cmyk}{.23,.17,.37,0}
+%\definecolor{pgreen}{cmyk}{.23,.17,.37,0}
+%\definecolor{red}{rgb}{??,??,??}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: New Commands and Evironments
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\contentsname}{Table of Contents} %Rename ToC to Table of Contents
+
+\renewcommand{\chaptermark}[1]{%                            % To remove the "Chapter" and "Section" words from these commands
+  \markboth{#1}{}}
+
+\newcommand{\todo}[1]{
+    {\color{red} {\LARGE TODO:} #1 } 
+}
+
+\newcommand{\Bold}[1]{
+    \textbf{#1}
+}
+
+\newcommand{\setup}[0]{
+	\section*{Setup}
+}
+
+\newcommand{\features}[0]{
+	\section*{Features of the Area}
+}
+
+\newcommand{\tactics}[0]{
+	\section*{Tactics}
+}
+
+\newcommand{\treasure}[3]{
+	\section*{Treasure}
+	    \subsection{XP}
+            The characters receive \Bold{#3 experience points} each for defeating #1. 
+            
+        \subsection{Gold \& Items}
+            If the PCs defeat the #1, they find \Bold{#2}.
+}
+
+\newcommand{\attack}{Attack rolls and damage rolls}
+\newcommand{\acbonus}{to AC}
+\newcommand{\intim}{Intimidate Checks}
+\newcommand{\free}{Free Action.}
+\newcommand{\ueynt}{until End of your Next Turn}
+
+\newcommand{\critdmg}[1]{#1 damage per plus}
+
+
+% For formatting items
+\newcommand{\aitem}[1]{\vspace{0.15 in} \colorbox{purple}{\color{white}{\parbox{82mm}{\noindent{\large\textbf{#1}} \hspace{5cm} {\small item}}}}  \hspace{\stretch{6}} \vspace{0.05 in}}
+\newcommand{\mitem}[1]{\vspace{0.15 in} \colorbox{orange}{\color{white}{\parbox{82mm}{\noindent{\large\textbf{#1}} \hspace{5cm} {\small item}}}}  \hspace{\stretch{6}} \vspace{0.05 in}}
+\newcommand{\tweaks}{\hrule \vspace{0.1 in} \noindent\textbf{Tweaks:}\\}
+\newcommand{\tweak}[2]{\noindent $\bullet$ {\textbf{#1}}: #2 \\}
+\newcommand{\flavour}[1]{\noindent{\emph{#1}} \\}
+\newcommand{\weapon}[1]{\noindent{\textbf{Weapon:} #1} \\}
+\newcommand{\armour}[1]{\noindent{\textbf{Armor:} #1} \\}
+\newcommand{\enhanc}[1]{\noindent{\textbf{Enhancement:} #1} \\}
+\newcommand{\crit}[1]{\noindent{\textbf{Critical:} #1} \\}
+\newcommand{\prop}[1]{\noindent{\textbf{Property:} #1} \\}
+\newcommand{\ipower}[3]{\noindent{\textbf{Power (#1)$~\diamond~$ #2:} #3} \\}
+\newcommand{\slot}[1]{\noindent{\textbf{Item Slot:} #1} \\}
+%\newcommand{\uses}[1]{\noindent{\textbf{Number of Uses:} #1} \\}
+
+
+
+% For formatting monsters
+\newcommand{\monster}[4]{
+    %\vspace{0.15 in} 
+    \colorbox{mdarkgreen}{\color{white}{\parbox{82mm}{
+        \noindent{\large\textbf{#1 \hspace{\stretch{6}} {\small #2}} \newline}
+        \noindent{\small\textbf{#3} \hspace{\stretch{6}} {\small #4} }
+     }\newline %END parbox
+     }}%END colorbox
+}
+\newcommand{\stats}[9]{
+    \newline
+    \colorbox{mgreen}{ \color{black}{\parbox{81mm}{
+        \Bold{HP~} #1; \Bold{Bloodied~}#2 \hspace{\stretch{6}} \Bold{Initiative~+}#3 \newline
+        \Bold{AC~} #4; \Bold{Fort~}#5, \Bold{Ref~}#6, \Bold{Will~}#7,  \newline
+        \Bold{Speed~}#9 \hspace{\stretch{6}} \Bold{Perception~}#8
+    }%END parbox
+    }}%END colorbox
+}
+\newcommand{\standardactions}{
+    \newline
+    \colorbox{agreen}{\color{white}{\parbox{82mm}{
+        \noindent{\large Standard Actions}
+    }%END parbox
+    }}%END colorbox
+}
+\newcommand{\minoractions}{
+    \newline
+    \colorbox{agreen}{\color{white}{\parbox{82mm}{
+        \noindent{\large Minor Actions}
+    }%END parbox
+    }}%END colorbox
+}
+\newcommand{\mpower}[2]{
+    \newline
+    \colorbox{mgreen}{\color{black}{
+        \parbox{81mm}{
+            \emph{#1:} #2
+        }%END parbox
+    }}%END colorbox
+}
+\newcommand{\mpowername}[3]{
+    \newline
+    \colorbox{pgreen}{\color{black}{
+        \parbox{81mm}{
+            \Bold{#1}(#2) $\diamond$ \Bold{#3}
+        }%END parbox
+    }}%END colorbox
+}
+
+%Attack powers
+\newcommand{\apower}[3]{\vspace{0.15 in} \colorbox{#1}{\color{white}{\parbox{82mm}{\noindent{\large\textbf{#2}} \hspace{4cm} {\small #3}}}}  \hspace{\stretch{6}} \vspace{0.05 in}}
+\newcommand{\trigger}[1]{\noindent{\textbf{Trigger:} #1} \\}
+\newcommand{\effect}[1]{\noindent{\textbf{Effect:} #1} \\}
+\newcommand{\apowerkey}[2]{\noindent{\textbf{#1$~\diamond~$ #2} } \\}
+
+%\newcommand{\monster}[4]{\vspace{0.15 in} \colorbox{green}{\color{white}{\noindent{\large\textbf{#1}} \hspace{5cm} {\small Level #2} \\} \noindent{\small #3 \raggedleft{#4}} }  \hrule \vspace{0.05 in}}
+%\newcommand{\tweaks}{\hrule \vspace{0.1 in} \noindent\textbf{Tweaks:}\\}
+%\newcommand{\tweak}[2]{\noindent $\bullet$ {\textbf{#1}}: #2 \\}
+%\newcommand{\flavour}[1]{\noindent{\emph{#1}} \\}
+
+%\newcommand{\weapon}[1]{\noindent{\textbf{Weapon:} #1} \\}
+%\newcommand{\enhanc}[1]{\noindent{\textbf{Enhancement:} #1} \\}
+%\newcommand{\crit}[1]{\noindent{\textbf{Critical:} #1} \\}
+%\newcommand{\prop}[1]{\noindent{\textbf{Property:} #1} \\}
+%\newcommand{\power}[3]{\noindent{\textbf{Power (#1)$~\diamond~$ #2:} #3} \\}
+%\newcommand{\slot}[1]{\noindent{\textbf{Item Slot:} #1} \\}
+%\newcommand{\uses}[1]{\noindent{\textbf{Number of Uses:} #1} \\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Page Style Definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Define a new pagestyle called 'myempty'
+\makepagestyle{myempty}
+\makeevenfoot{myempty}{}{}{}
+\makeoddfoot{myempty}{}{}{}
+
+% Define a new pagestyle called 'mystyle'
+\makepagestyle{mystyle}
+    %\makeheadfootruleprefix{plain}{\color{lightblue}}{}
+    %\makeevenhead {plain}{\footnotesize\color{lightblue}\rightmark}{}{\color{lightblue}\footnotesize \thetitle}
+    %\makeoddhead {plain}{\footnotesize\color{lightblue}\rightmark}{}{\color{lightblue}\footnotesize \thetitle}
+    %\makeheadrule {plain}{\textwidth}{\normalrulethickness}
+
+    %\makefootrule {plain}{\textwidth}{\normalrulethickness}{\footruleskip}
+    \makeoddfoot{mystyle}{\emph{\small\chaptername~\thechapter~\textcolor{lightblue}{\leftmark}}}{}{}
+    \makeevenfoot{mystyle}{\emph{\small\chaptername~\thechapter~\textcolor{lightblue}{\leftmark}}}{}{}
+    \nouppercaseheads %disables automatic conversion to Uppercase letters
+    
+    %\setlength{\headsep}{1mm}
+    \setlength{\footskip}{7mm}
+
+\pagestyle{mystyle} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Chapter Style Definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makechapterstyle{appleChap}{
+  \setlength{\beforechapskip}{0pt}
+  \setlength{\midchapskip}{-50pt}
+  \setlength{\afterchapskip}{0.3cm}
+  \setlength{\prechapterprecisshift}{-0.8\baselineskip}                         %chapterprecis iets lager zetten
+  \renewcommand*{\printchaptername}{}
+  \renewcommand*{\chapnumfont}{\normalfont\sffamily\bfseries\fontsize{1cm}{0}\selectfont}
+  \renewcommand*{\printchapternum}{\flushleft\chapnumfont\color{lightblue}{\thechapter}}
+  \renewcommand*{\chaptitlefont}{\normalfont\sffamily\Huge\bfseries}
+  \renewcommand*{\printchaptertitle}[1]{%
+    \quad\raisebox{40pt}\raggedright\chaptitlefont\color{appleblue}\parbox[t]{\textwidth-3cm}{\raggedright ##1}\thispagestyle{empty} }
+}
+
+
+\chapterstyle{appleChap}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Section Style Definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%SECTION STYLE
+\newcommand{\appleSec}[1]{%
+  \noindent\color{lightblue}%
+  \parbox[t]{\textwidth}{%
+    \sffamily\large\color{appleblue}\bfseries #1\vskip1em%
+  }
+}
+\setsecheadstyle{\appleSec}
+\setaftersecskip{-\onelineskip}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Subsection Style Definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%SUBSECTION STYLE
+\newcommand{\blacsubsec}[1]{%
+  \noindent%
+  \parbox[t]{\textwidth}{%
+    \quad \sffamily\large\bfseries #1\vskip1em%
+  }
+\setaftersubsecskip{-\onelineskip}
+
+}
+\setsubsecheadstyle{\blacsubsec}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Title Page Definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%TODO
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: D&D Specific definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\readaloud}[2]{
+    \emph{#1}
+    \begin{quotation}\textbf{#2} \end{quotation}
+}

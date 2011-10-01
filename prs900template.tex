@@ -1,0 +1,128 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%  PROJECT: prs900template
+%%
+%%  Created by Etienne van Delden on 24-05-11.
+%%  Copyright 2011 __MyCompanyName__. 
+%%  
+%%  All rights reserved.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[9pt]{memoir}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Packages declarations
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[english]{babel}
+\usepackage[pdftex]{graphicx}
+\usepackage{lipsum}
+
+\usepackage{prs900}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Input macro file
+%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% Begin Document
+%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 
+	%% MARK: Title & Data
+	%% 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    \renewcommand{\contentsname}{Table of Contents} %Rename ToC to Table of Contents
+    
+	\title{Title for prs900template}
+	\author{Etienne van Delden}
+	\date{\today}
+    %\titlepic{\includegraphics[height=8.2cm]{cover.png}}
+    
+    
+   	\maketitle
+    \thispagestyle{empty}
+    
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 
+	%% MARK: Abstract
+	%% 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{figure}[b]
+        \begin{abstract}
+            The Abstract
+        \end{abstract}
+    \end{figure}
+
+    \newpage
+   \setcounter{tocdepth}{1}
+    \tableofcontents*
+    
+    
+    %\pagestyle{mystyle}
+        
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 
+	%% MARK: Introduction
+	%% 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\mainmatter
+	\chapter{Introduction}
+        \chapterprecis{The chapterprecis, an awesome standard \LaTeX command}
+	
+        \section{The new section}\noindent    
+        A read aloud text command!
+        \readaloud{When the players arive, read:}{\lipsum[1-1]}
+         \lipsum[2-2]
+        \section{the next section}
+            \lipsum[3-4]
+        \subsection{last section}
+            \lipsum[4-5]
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 
+	%% MARK: The chapters
+	%% 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\chapter{The long chapter title} 
+	\label{cha:}
+    \chapterprecis{A slightly longer chapterprecis, but only because this sentence contains words that have no use what so over. Filler words to not fully rely on Lorem Ipsum}
+        \lipsum[1-6]
+
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 
+	%% MARK: Bibliography
+	%% 
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\begin{thebibliography}{XXXX}
+		
+		\bibitem[XXXX]{XXXX}
+		\newblock{Name,}
+		\newblock{\em Title,}
+		\newblock{ vol. X.}
+		\newblock{ pp. XX--YY.}
+		\newblock{Editor, Town,}
+		\newblock{Year.}
+		
+	\end{thebibliography}
+	
+\end{document}
