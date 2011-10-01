@@ -274,7 +274,7 @@
   \renewcommand\printchaptername{}
   \renewcommand\printchapternum{\null\feline@chm[1cm]\par}  
     \renewcommand\afterchapternum{\par\vskip\midchapskip}
-    \renewcommand\printchaptertitle[1]{\chaptitlefont \hspace{1.2cm}  ##1 \thispagestyle{empty}}
+    \renewcommand\printchaptertitle[1]{\chaptitlefont \hspace{1.2cm}\parbox{\textwidth-2cm}{##1} \thispagestyle{empty}}
 }
 \makeatother
 \chapterstyle{seprama}
