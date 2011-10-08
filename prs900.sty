@@ -15,17 +15,18 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage[T1]{fontenc}
-\usepackage{cmbright}
+%\usepackage[T1]{fontenc}
+%\usepackage{cmbright}
 \usepackage{xcolor}
 \usepackage{calc}
 \usepackage{tikz}
-\usepackage[pdftex, colorlinks=true, linkcolor=black, urlcolor=blue]{hyperref}
+\usepackage[colorlinks=true, linkcolor=black, urlcolor=blue]{hyperref}
 \usepackage{graphicx}
 
-\usepackage[paperwidth=91mm, paperheight=155mm, hmargin={0.3cm, 0.3cm}, vmargin={1cm, 1cm}]{geometry}
+\usepackage[paperwidth=91mm, paperheight=155mm, hmargin={0.5cm, 0.7cm}, vmargin={1cm, 1cm}]{geometry}
 
-
+\usepackage{fontspec}
+\setromanfont{Mentor Std}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 
@@ -136,7 +137,7 @@
 \newcommand\feline@chapter@marker[1][2cm]{%
   \sbox\feline@chapter{%
     \resizebox{!}{#1}{\fboxsep=2pt  %
-      \colorbox{lightblue}{\color{white}\bfseries\sffamily\thechapter}% 
+      \colorbox{lightblue}{\color{white}\bfseries\thechapter}% 
     }}%
   %\rotatebox{90}{%
   %  \resizebox{%
@@ -157,8 +158,8 @@
     \setlength{\beforechapskip}{-30pt}
     \setlength{\midchapskip}{-40pt}                                    %Moves the chapter title 
     \setlength{\afterchapskip}{40pt}
-  \renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so}
-  \renewcommand\chaptitlefont{\normalfont \fontsize{18}{18} \bfseries\scshape}
+  \renewcommand\chapnamefont{\fontspec{DnDLolth}\Large\scshape\raggedleft\so}
+  \renewcommand\chaptitlefont{\fontspec{DnDLolth} \fontsize{18}{18} \bfseries\scshape}
   \renewcommand\chapternamenum{}
   \renewcommand\printchaptername{}
   \renewcommand\printchapternum{\hspace{.5cm}\feline@chm[1cm]\par}  
@@ -183,7 +184,7 @@
 \newcommand{\appleSec}[1]{%
   \noindent\color{lightblue}%
   \parbox[t]{\textwidth}{%
-    \sffamily\large\color{appleblue}\bfseries #1\vskip1em%
+    \fontspec{DnDLolth}\large\color{appleblue}\bfseries #1\vskip1em%
   }
 }
 \setsecheadstyle{\appleSec}
@@ -200,7 +201,7 @@
 \newcommand{\blacsubsec}[1]{%
   \noindent%
   \parbox[t]{\textwidth}{%
-    \quad \sffamily\large\bfseries #1\vskip1em%
+    \quad \fontspec{DnDLolth}\large\bfseries #1\vskip1em%
   }
 \setaftersubsecskip{-\onelineskip}
 
@@ -226,8 +227,8 @@
     % Show Title
     \node [xshift=0cm,yshift=2cm,text width=.9\textwidth,anchor=south east] at (current page.east) {
         %\fontspec{Meta Black Roman}
-        {\fontsize{22}{0} \bfseries\color{black} \thetitle }\\ \vspace{2ex}
-        {\fontsize{16}{0} \bfseries\color{black!20} \if\@subtitle\relax\else\@subtitle\par\fi }
+        {\fontsize{22}{0} \fontspec{DnDLolth} \bfseries\color{black} \thetitle }\\ \vspace{2ex}
+        {\fontsize{16}{0} \fontspec{DnDLolth} \bfseries\color{black!20} \if\@subtitle\relax\else\@subtitle\par\fi }
     };
 
     %Show logo
@@ -239,8 +240,8 @@
     %Show Authors
 	\node [xshift=.2cm, yshift=0.2cm,text width=9cm,anchor=south] at (current page.south)
 	{
-            {\color{appleblue} \large Authors}\\
-            {\color{black!40} \theauthor}
+            {\color{appleblue}\fontspec{DnDLolth} \large Authors}\\
+            {\color{black!40}\fontspec{DnDLolth} \theauthor}
 	};
 
     %Show Date
@@ -262,7 +263,7 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\readaloud}[2]{
+\newcommand{\readaloud}[2]{ 
     \emph{#1}
     \begin{quotation}\textbf{#2} \end{quotation}
 }
