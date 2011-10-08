@@ -19,8 +19,10 @@
 \usepackage{cmbright}
 \usepackage{xcolor}
 \usepackage{calc}
-\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
 \usepackage[pdftex, colorlinks=true, linkcolor=black, urlcolor=blue]{hyperref}
+\usepackage{graphicx}
+
 \usepackage[paperwidth=91mm, paperheight=155mm, hmargin={0.3cm, 0.3cm}, vmargin={1cm, 1cm}]{geometry}
 
 
@@ -68,6 +70,203 @@
 \newcommand{\Bold}[1]{
     \textbf{#1}
 }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Page Style Definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Define a new pagestyle called 'myempty'
+\makepagestyle{myempty}
+\makeevenfoot{myempty}{}{}{}
+\makeoddfoot{myempty}{}{}{}
+
+% Define a new pagestyle called 'mystyle'
+\makepagestyle{mystyle}
+    %\makeheadfootruleprefix{plain}{\color{lightblue}}{}
+    %\makeevenhead {plain}{\footnotesize\color{lightblue}\rightmark}{}{\color{lightblue}\footnotesize \thetitle}
+    %\makeoddhead {plain}{\footnotesize\color{lightblue}\rightmark}{}{\color{lightblue}\footnotesize \thetitle}
+    %\makeheadrule {plain}{\textwidth}{\normalrulethickness}
+
+    %\makefootrule {plain}{\textwidth}{\normalrulethickness}{\footruleskip}
+    \makeoddfoot{mystyle}{\emph{\small\chaptername~\thechapter~\textcolor{lightblue}{\leftmark}}}{}{}
+    \makeevenfoot{mystyle}{\emph{\small\chaptername~\thechapter~\textcolor{lightblue}{\leftmark}}}{}{}
+    \nouppercaseheads %disables automatic conversion to Uppercase letters
+    
+    %\setlength{\headsep}{1mm}
+    \setlength{\footskip}{7mm}
+
+% Define a new pagestyle called 'pagenumber'
+\makepagestyle{pagenumber}
+\makeoddfoot{pagenumber}{}{}{\thepage}
+\makeevenfoot{pagenumber}{}{}{\thepage}
+
+
+\pagestyle{mystyle} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Chapter Style Definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makechapterstyle{appleChap}{
+  \setlength{\beforechapskip}{0pt}
+  \setlength{\midchapskip}{-50pt}
+  \setlength{\afterchapskip}{0.3cm}
+  \setlength{\prechapterprecisshift}{-0.8\baselineskip}                         %chapterprecis iets lager zetten
+  \renewcommand*{\printchaptername}{}
+  \renewcommand*{\chapnumfont}{\normalfont\sffamily\bfseries\fontsize{1cm}{0}\selectfont}
+  \renewcommand*{\printchapternum}{\flushleft\chapnumfont\color{lightblue}{\thechapter}}
+  \renewcommand*{\chaptitlefont}{\normalfont\sffamily\Huge\bfseries}
+  \renewcommand*{\printchaptertitle}[1]{%
+    \quad\raisebox{40pt}\raggedright\chaptitlefont\color{appleblue}\parbox[t]{\textwidth-3cm}{\raggedright ##1}\thispagestyle{empty} }
+}
+
+% Define a new chapterstyle called 'seprama'
+\makeatletter
+
+\newlength\dlf@normtxtw
+\setlength\dlf@normtxtw{\textwidth}
+\def\myhelvetfont{\def\sfdefault{mdput}}
+\newsavebox{\feline@chapter}
+
+\newcommand\feline@chapter@marker[1][2cm]{%
+  \sbox\feline@chapter{%
+    \resizebox{!}{#1}{\fboxsep=2pt  %
+      \colorbox{lightblue}{\color{white}\bfseries\sffamily\thechapter}% 
+    }}%
+  %\rotatebox{90}{%
+  %  \resizebox{%
+  %    \heightof{\usebox{\feline@chapter}}+\depthof{\usebox{\feline@chapter}}}%
+  %  {!}{\scshape\so\@chapapp}}\quad%
+  \raisebox{\depthof{\usebox{\feline@chapter}}}{\usebox{\feline@chapter}}%
+}
+
+\newcommand\feline@chm[1][2cm]{%
+  \sbox\feline@chapter{\feline@chapter@marker[#1]}%
+  \makebox[0pt][l]{% aka \rlap
+    \makebox[1cm][r]{\usebox\feline@chapter}%
+  }}
+  
+\makechapterstyle{seprama}{
+    \openany
+    
+    \setlength{\beforechapskip}{-30pt}
+    \setlength{\midchapskip}{-40pt}                                    %Moves the chapter title 
+    \setlength{\afterchapskip}{40pt}
+  \renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so}
+  \renewcommand\chaptitlefont{\normalfont \fontsize{18}{18} \bfseries\scshape}
+  \renewcommand\chapternamenum{}
+  \renewcommand\printchaptername{}
+  \renewcommand\printchapternum{\hspace{.5cm}\feline@chm[1cm]\par}  
+    \renewcommand\afterchapternum{\par\vskip\midchapskip}
+    \renewcommand\printchaptertitle[1]{\chaptitlefont \hspace{1.7cm}\parbox{\textwidth-2cm}{##1} \thispagestyle{empty}}
+}
+\makeatother
+\chapterstyle{seprama}
+
+
+
+%\chapterstyle{appleChap}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Section Style Definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%SECTION STYLE
+\newcommand{\appleSec}[1]{%
+  \noindent\color{lightblue}%
+  \parbox[t]{\textwidth}{%
+    \sffamily\large\color{appleblue}\bfseries #1\vskip1em%
+  }
+}
+\setsecheadstyle{\appleSec}
+\setaftersecskip{-\onelineskip}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Subsection Style Definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%SUBSECTION STYLE
+\newcommand{\blacsubsec}[1]{%
+  \noindent%
+  \parbox[t]{\textwidth}{%
+    \quad \sffamily\large\bfseries #1\vskip1em%
+  }
+\setaftersubsecskip{-\onelineskip}
+
+}
+\setsubsecheadstyle{\blacsubsec}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Title Page Definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\def\@subtitle{\relax}
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+
+\newcommand{\cover}{}
+
+
+% Command creating a title page
+\renewcommand{\maketitle}{
+\begin{titlingpage}
+\begin{tikzpicture}[remember picture, overlay]
+    % Show Title
+    \node [xshift=-3cm,yshift=2cm,text width=.5\textwidth,anchor=south east] at (current page.east) {
+        %\fontspec{Meta Black Roman}
+        {\fontsize{22}{0} \bfseries\color{black} \thetitle }\\ \vspace{2ex}
+        {\fontsize{16}{0} \bfseries\color{black!20} \if\@subtitle\relax\else\@subtitle\par\fi }
+    };
+
+    %Show logo
+    \node [xshift=0cm,yshift=2cm,inner sep=0pt,anchor=south] at (current page.south)
+	{
+        \cover
+	};
+
+    %Show Authors
+	\node [xshift=.2cm, yshift=0.2cm,text width=9cm,anchor=south] at (current page.south)
+	{
+            {\color{appleblue} \large Authors}\\
+            {\color{black!40} \theauthor}
+	};
+
+    %Show Date
+	\node [xshift=3.7cm, yshift=.2cm,text width=4cm,anchor=south] at (current page.south)
+	{
+			%\fontspec{Meta Medium Roman}
+            \color{black!30}\bfseries\small
+            \thedate
+	};
+
+\end{tikzpicture}
+\end{titlingpage}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: D&D Specific definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\readaloud}[2]{
+    \emph{#1}
+    \begin{quotation}\textbf{#2} \end{quotation}
+}
+
 
 \newcommand{\setup}[0]{
 	\section*{Setup}
@@ -184,157 +383,5 @@
 %\newcommand{\slot}[1]{\noindent{\textbf{Item Slot:} #1} \\}
 %\newcommand{\uses}[1]{\noindent{\textbf{Number of Uses:} #1} \\}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 
-%% MARK: Page Style Definitions
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Define a new pagestyle called 'myempty'
-\makepagestyle{myempty}
-\makeevenfoot{myempty}{}{}{}
-\makeoddfoot{myempty}{}{}{}
-
-% Define a new pagestyle called 'mystyle'
-\makepagestyle{mystyle}
-    %\makeheadfootruleprefix{plain}{\color{lightblue}}{}
-    %\makeevenhead {plain}{\footnotesize\color{lightblue}\rightmark}{}{\color{lightblue}\footnotesize \thetitle}
-    %\makeoddhead {plain}{\footnotesize\color{lightblue}\rightmark}{}{\color{lightblue}\footnotesize \thetitle}
-    %\makeheadrule {plain}{\textwidth}{\normalrulethickness}
-
-    %\makefootrule {plain}{\textwidth}{\normalrulethickness}{\footruleskip}
-    \makeoddfoot{mystyle}{\emph{\small\chaptername~\thechapter~\textcolor{lightblue}{\leftmark}}}{}{}
-    \makeevenfoot{mystyle}{\emph{\small\chaptername~\thechapter~\textcolor{lightblue}{\leftmark}}}{}{}
-    \nouppercaseheads %disables automatic conversion to Uppercase letters
-    
-    %\setlength{\headsep}{1mm}
-    \setlength{\footskip}{7mm}
-
-% Define a new pagestyle called 'pagenumber'
-\makepagestyle{pagenumber}
-\makeoddfoot{pagenumber}{}{}{\thepage}
-\makeevenfoot{pagenumber}{}{}{\thepage}
-
-
-\pagestyle{mystyle} 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 
-%% MARK: Chapter Style Definitions
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\makechapterstyle{appleChap}{
-  \setlength{\beforechapskip}{0pt}
-  \setlength{\midchapskip}{-50pt}
-  \setlength{\afterchapskip}{0.3cm}
-  \setlength{\prechapterprecisshift}{-0.8\baselineskip}                         %chapterprecis iets lager zetten
-  \renewcommand*{\printchaptername}{}
-  \renewcommand*{\chapnumfont}{\normalfont\sffamily\bfseries\fontsize{1cm}{0}\selectfont}
-  \renewcommand*{\printchapternum}{\flushleft\chapnumfont\color{lightblue}{\thechapter}}
-  \renewcommand*{\chaptitlefont}{\normalfont\sffamily\Huge\bfseries}
-  \renewcommand*{\printchaptertitle}[1]{%
-    \quad\raisebox{40pt}\raggedright\chaptitlefont\color{appleblue}\parbox[t]{\textwidth-3cm}{\raggedright ##1}\thispagestyle{empty} }
-}
-
-% Define a new chapterstyle called 'seprama'
-\makeatletter
-
-\newlength\dlf@normtxtw
-\setlength\dlf@normtxtw{\textwidth}
-\def\myhelvetfont{\def\sfdefault{mdput}}
-\newsavebox{\feline@chapter}
-
-\newcommand\feline@chapter@marker[1][2cm]{%
-  \sbox\feline@chapter{%
-    \resizebox{!}{#1}{\fboxsep=2pt  %
-      \colorbox{lightblue}{\color{white}\bfseries\sffamily\thechapter}% 
-    }}%
-  %\rotatebox{90}{%
-  %  \resizebox{%
-  %    \heightof{\usebox{\feline@chapter}}+\depthof{\usebox{\feline@chapter}}}%
-  %  {!}{\scshape\so\@chapapp}}\quad%
-  \raisebox{\depthof{\usebox{\feline@chapter}}}{\usebox{\feline@chapter}}%
-}
-
-\newcommand\feline@chm[1][2cm]{%
-  \sbox\feline@chapter{\feline@chapter@marker[#1]}%
-  \makebox[0pt][l]{% aka \rlap
-    \makebox[1cm][r]{\usebox\feline@chapter}%
-  }}
-  
-\makechapterstyle{seprama}{
-    \openany
-    
-    \setlength{\beforechapskip}{-40pt}
-    \setlength{\midchapskip}{-40pt}                                    %Moves the chapter title 
-    \setlength{\afterchapskip}{40pt}
-  \renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so}
-  \renewcommand\chaptitlefont{\normalfont \fontsize{18}{18} \bfseries\scshape}
-  \renewcommand\chapternamenum{}
-  \renewcommand\printchaptername{}
-  \renewcommand\printchapternum{\null\feline@chm[1cm]\par}  
-    \renewcommand\afterchapternum{\par\vskip\midchapskip}
-    \renewcommand\printchaptertitle[1]{\chaptitlefont \hspace{1.2cm}\parbox{\textwidth-2cm}{##1} \thispagestyle{empty}}
-}
-\makeatother
-\chapterstyle{seprama}
-
-
-
-%\chapterstyle{appleChap}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 
-%% MARK: Section Style Definitions
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%SECTION STYLE
-\newcommand{\appleSec}[1]{%
-  \noindent\color{lightblue}%
-  \parbox[t]{\textwidth}{%
-    \sffamily\large\color{appleblue}\bfseries #1\vskip1em%
-  }
-}
-\setsecheadstyle{\appleSec}
-\setaftersecskip{-\onelineskip}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 
-%% MARK: Subsection Style Definitions
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%SUBSECTION STYLE
-\newcommand{\blacsubsec}[1]{%
-  \noindent%
-  \parbox[t]{\textwidth}{%
-    \quad \sffamily\large\bfseries #1\vskip1em%
-  }
-\setaftersubsecskip{-\onelineskip}
-
-}
-\setsubsecheadstyle{\blacsubsec}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 
-%% MARK: Title Page Definitions
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%TODO
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 
-%% MARK: D&D Specific definitions
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\readaloud}[2]{
-    \emph{#1}
-    \begin{quotation}\textbf{#2} \end{quotation}
-}
+\endinput
