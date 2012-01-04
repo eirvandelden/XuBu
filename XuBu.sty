@@ -342,6 +342,14 @@
 
 
 % For formatting monsters
+\newcommand{\monstername}[2]{
+    %\vspace{0.15 in} 
+    \colorbox{mdarkgreen}{\color{white}{\parbox{82mm}{
+        \noindent{\large\textbf{#1 \hspace{\stretch{6}} {\small #2}} \newline}
+     }\newline %END parbox
+     }}%END colorbox
+}
+
 \newcommand{\monster}[4]{
     %\vspace{0.15 in} 
     \colorbox{mdarkgreen}{\color{white}{\parbox{82mm}{
@@ -366,6 +374,15 @@
     }%END parbox
     }}%END colorbox
 }
+\newcommand{\triggeredactions}{
+    \newline
+    \colorbox{agreen}{\color{white}{\parbox{82mm}{
+        \noindent{\large Triggered Actions}
+    }%END parbox
+    }}%END colorbox
+}
+
+
 \newcommand{\minoractions}{
     \newline
     \colorbox{agreen}{\color{white}{\parbox{82mm}{
