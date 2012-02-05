@@ -28,11 +28,11 @@
 \ProcessOptions
 
 %Handle DND option
-\ifthenelse{\boolean{BDnD}}{% \DND is undefined, regular fonts are needed
+\ifthenelse{\boolean{BDnD}}{% DnD Boolean == true, use DND font
     \setromanfont{Mentor Std}
 
     %\newcommand{\NDND}{undefined}
-}{%else, \DND has been called, switch to DND fonts
+}{%else, DnD Boolean is false, use cmbright
     \usepackage[T1]{fontenc}
     \usepackage{cmbright}
 }
@@ -96,6 +96,9 @@
     \textbf{#1}
 }
 
+\newcommand{\note}[1]{
+    {\colorbox{gray}{\parbox{\textwidth}{\color{white} #1 }}} 
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 
@@ -325,8 +328,9 @@
 
 
 % For formatting items
-\newcommand{\aitem}[1]{\vspace{0.15 in} \colorbox{purple}{\color{white}{\parbox{82mm}{\noindent{\large\textbf{#1}} \hspace{5cm} {\small item}}}}  \hspace{\stretch{6}} \vspace{0.05 in}}
-\newcommand{\mitem}[1]{\vspace{0.15 in} \colorbox{orange}{\color{white}{\parbox{82mm}{\noindent{\large\textbf{#1}} \hspace{5cm} {\small item}}}}  \hspace{\stretch{6}} \vspace{0.05 in}}
+\newcommand{\aitem}[1]{\vspace{0.15 in} \colorbox{purple}{\color{white}{\parbox{78mm}{\noindent{\large\textbf{#1}} \hspace{5cm} {\small item}}}}  \hspace{\stretch{6}} \vspace{0.05 in}}
+\newcommand{\mitem}[1]{\colorbox{orange}{\color{white}{\parbox{78mm}{
+    \noindent{\large\textbf{#1}} \hspace{\stretch{6}} {\small item} \vspace{2pt}}}}}  %  \vspace{0.05 in}}
 \newcommand{\tweaks}{\hrule \vspace{0.1 in} \noindent\textbf{Tweaks:}\\}
 \newcommand{\tweak}[2]{\noindent $\bullet$ {\textbf{#1}}: #2 \\}
 \newcommand{\flavour}[1]{\noindent{\emph{#1}} \\}
@@ -344,7 +348,7 @@
 % For formatting monsters
 \newcommand{\monstername}[2]{
     %\vspace{0.15 in} 
-    \colorbox{mdarkgreen}{\color{white}{\parbox{82mm}{
+    \colorbox{mdarkgreen}{\color{white}{\parbox{78mm}{
         \noindent{\large\textbf{#1 \hspace{\stretch{6}} {\small #2}} \newline}
      }\newline %END parbox
      }}%END colorbox
@@ -352,7 +356,7 @@
 
 \newcommand{\monster}[4]{
     %\vspace{0.15 in} 
-    \colorbox{mdarkgreen}{\color{white}{\parbox{82mm}{
+    \colorbox{mdarkgreen}{\color{white}{\parbox{78mm}{
         \noindent{\large\textbf{#1 \hspace{\stretch{6}} {\small #2}} \newline}
         \noindent{\small\textbf{#3} \hspace{\stretch{6}} {\small #4} }
      }\newline %END parbox
@@ -360,32 +364,44 @@
 }
 \newcommand{\stats}[9]{
     \newline
-    \colorbox{mgreen}{ \color{black}{\parbox{81mm}{
+    \colorbox{mgreen}{ \color{black}{\parbox{78mm}{
         \Bold{HP~} #1; \Bold{Bloodied~}#2 \hspace{\stretch{6}} \Bold{Initiative~+}#3 \newline
         \Bold{AC~} #4; \Bold{Fort~}#5, \Bold{Ref~}#6, \Bold{Will~}#7,  \newline
         \Bold{Speed~}#9 \hspace{\stretch{6}} \Bold{Perception~}#8
     }%END parbox
     }}%END colorbox
 }
+\newcommand{\traits}{
+    \newline
+    \colorbox{agreen}{\color{white}{\parbox{78mm}{
+        \noindent{\large Traits}
+    }%END parbox
+    }}%END colorbox
+}
 \newcommand{\standardactions}{
     \newline
-    \colorbox{agreen}{\color{white}{\parbox{82mm}{
+    \colorbox{agreen}{\color{white}{\parbox{78mm}{
         \noindent{\large Standard Actions}
     }%END parbox
     }}%END colorbox
 }
 \newcommand{\triggeredactions}{
     \newline
-    \colorbox{agreen}{\color{white}{\parbox{82mm}{
+    \colorbox{agreen}{\color{white}{\parbox{78mm}{
         \noindent{\large Triggered Actions}
     }%END parbox
     }}%END colorbox
 }
-
-
+\newcommand{\moveactions}{
+    \newline
+    \colorbox{agreen}{\color{white}{\parbox{78mm}{
+        \noindent{\large Move Actions}
+    }%END parbox
+    }}%END colorbox
+}
 \newcommand{\minoractions}{
     \newline
-    \colorbox{agreen}{\color{white}{\parbox{82mm}{
+    \colorbox{agreen}{\color{white}{\parbox{78mm}{
         \noindent{\large Minor Actions}
     }%END parbox
     }}%END colorbox
@@ -393,7 +409,7 @@
 \newcommand{\mpower}[2]{
     \newline
     \colorbox{mgreen}{\color{black}{
-        \parbox{81mm}{
+        \parbox{78mm}{
             \emph{#1:} #2
         }%END parbox
     }}%END colorbox
@@ -401,14 +417,14 @@
 \newcommand{\mpowername}[3]{
     \newline
     \colorbox{pgreen}{\color{black}{
-        \parbox{81mm}{
+        \parbox{78mm}{
             \Bold{#1}(#2) $\diamond$ \Bold{#3}
         }%END parbox
     }}%END colorbox
 }
 
 %Attack powers
-\newcommand{\apower}[3]{\vspace{0.15 in} \colorbox{#1}{\color{white}{\parbox{82mm}{\noindent{\large\textbf{#2}} \hspace{4cm} {\small #3}}}}  \hspace{\stretch{6}} \vspace{0.05 in}}
+\newcommand{\apower}[3]{\vspace{0.15 in} \colorbox{#1}{\color{white}{\parbox{78mm}{\noindent{\large\textbf{#2}} \hspace{4cm} {\small #3}}}}  \hspace{\stretch{6}} \vspace{0.05 in}}
 \newcommand{\trigger}[1]{\noindent{\textbf{Trigger:} #1} \\}
 \newcommand{\effect}[1]{\noindent{\textbf{Effect:} #1} \\}
 \newcommand{\apowerkey}[2]{\noindent{\textbf{#1$~\diamond~$ #2} } \\}
