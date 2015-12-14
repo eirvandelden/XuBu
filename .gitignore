@@ -73,3 +73,11 @@ build/prs900template.build/prs900template.pbxindex/strings.pbxstrings/strings
 missfont.log
 
 prs900template.log
+
+*.aux
+
+*.out
+
+*.toc
+
+*.pdf
