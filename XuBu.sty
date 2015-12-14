@@ -33,8 +33,8 @@
 
     %\newcommand{\NDND}{undefined}
 }{%else, DnD Boolean is false, use cmbright
-    \usepackage[T1]{fontenc}
-    \usepackage{cmbright}
+%    \usepackage[T1]{fontenc}
+    \setromanfont{Myriad Pro}
 }
 
 
@@ -44,13 +44,13 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage{xcolor}
+\usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{calc}
 \usepackage{tikz}
 \usepackage[colorlinks=true, linkcolor=black, urlcolor=blue]{hyperref}
 \usepackage{graphicx}
-\usepackage[paperwidth=91mm, paperheight=155mm, hmargin={0.5cm, 0.7cm}, vmargin={1cm, 1cm}]{geometry}
-
+%\usepackage[paperwidth=91mm, paperheight=155mm, hmargin={0.5cm, 0.7cm}, vmargin={1cm, 1cm}]{geometry}
+%\usepackage[paperwidth=768pt, paperheight=1024pt, hmargin={0.5cm, 0.7cm}, vmargin={1cm, 1cm}]{geometry}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 
@@ -74,6 +74,7 @@
 \definecolor{mgreen}{cmyk}{.12,.06,.23,0}
 \definecolor{agreen}{cmyk}{.37,.23,.92,.35}
 \definecolor{pgreen}{cmyk}{.23,.17,.37,0}
+\definecolor{lightgrey}{gray}{.5}
 %\definecolor{pgreen}{cmyk}{.23,.17,.37,0}
 %\definecolor{red}{rgb}{??,??,??}
 
@@ -85,11 +86,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand{\contentsname}{Table of Contents} %Rename ToC to Table of Contents
 
+\newcommand\doubleplus{+\kern-1.3ex+\kern0.8ex}
+
 \renewcommand{\chaptermark}[1]{%                            % To remove the "Chapter" and "Section" words from these commands
   \markboth{#1}{}}
 
+\newcommand{\chapterpage}[1]{
+    \thispagestyle{myempty}
+    \chapter{#1}
+    \newpage
+} %create a page with only the chapter on it
+
+
 \newcommand{\todo}[1]{
-    {\color{red} {\LARGE TODO:} #1 } 
+    {\color{red} {\LARGE TODO:} #1 \newline} 
 }
 
 \newcommand{\Bold}[1]{
@@ -98,6 +108,56 @@
 
 \newcommand{\note}[1]{
     {\colorbox{gray}{\parbox{\textwidth}{\color{white} #1 }}} 
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% MARK: Title Page Definitions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\def\@subtitle{\relax}
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+
+\newcommand{\cover}{}
+
+
+% Command creating a title page
+\renewcommand{\maketitle}{
+\begin{titlingpage}
+\begin{tikzpicture}[remember picture, overlay]
+    % Show Title
+    \node [xshift=0cm,yshift=2cm,text width=.9\textwidth,anchor=south east] at (current page.east) {
+        %\fontspec{Meta Black Roman}
+        {\fontsize{22}{0} \ifthenelse{\boolean{BDnD}}{\fontspec{DnDLolth}}{} \bfseries\color{black} \thetitle }\\ \vspace{2ex}
+        {\fontsize{16}{0} \ifthenelse{\boolean{BDnD}}{\fontspec{DnDLolth}}{} \bfseries\color{black!20} \if\@subtitle\relax\else\@subtitle\par\fi }
+    };
+
+    %Show logo
+    \node [xshift=0cm,yshift=2cm,inner sep=0pt,anchor=south] at (current page.south)
+	{
+        %\switch to using \IfFileExists
+        \cover
+	};
+
+    %Show Authors
+	\node [xshift=.2cm, yshift=0.2cm,text width=9cm,anchor=south] at (current page.south)
+	{
+            {\color{appleblue}\ifthenelse{\boolean{BDnD}}{\fontspec{DnDLolth}}{} \large Authors}\\
+            {\color{black!40} \ifthenelse{\boolean{BDnD}}{\fontspec{DnDLolth}}{} \theauthor}
+	};
+
+    %Show Date
+	\node [xshift=3.7cm, yshift=.2cm,text width=4cm,anchor=south] at (current page.south)
+	{
+			%\fontspec{Meta Medium Roman}
+            \color{black!30}\bfseries\small
+            \thedate
+	};
+
+\end{tikzpicture}
+\end{titlingpage}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -154,9 +214,8 @@
 }
 
 % Define a new chapterstyle called 'seprama'
-\makechapterstyle{RedBookmark}{
+\makechapterstyle{Bookmark}{
     \openany
-    
     \setlength{\beforechapskip}{-5pt}
     \setlength{\midchapskip}{-40pt}                                    %Moves the chapter title 
     \setlength{\afterchapskip}{35pt}
@@ -169,19 +228,46 @@
 %    \draw[color=red, fill=red] (-.25,3) rectangle (1,.5);
 
     % Show Title
-    \node [xshift=.25cm,yshift=0.25cm,text width=.9\textwidth,anchor=north west] at (current page.north west) {
+    \node [xshift=.18cm,yshift=0.25cm,text width=.9\textwidth,anchor=north west] at (current page.north west) {
         %\fontspec{Meta Black Roman}
-        {\fontsize{32}{0} \ifthenelse{\boolean{BDnD}}{\fontspec{DnDLolth}}{} 
-        
-        \bfseries\colorbox{red}{\parbox{1.3cm}{\color{white} \centering \vspace{.6cm} \thechapter \vspace{.7cm}}} }\\ \vspace{2ex}
+        {\fontsize{32}{0} \ifthenelse{\boolean{BDnD}}{\fontspec{DnDLolth}}{} \bfseries\colorbox{appleblue}{\parbox{1.3cm}{\color{white} \centering \vspace{.6cm} \thechapter \vspace{.5cm}}} }\\ \vspace{3ex}
     };
 
 \end{tikzpicture}}  
     \renewcommand\afterchapternum{\par\vskip\midchapskip}
     \renewcommand\printchaptertitle[1]{\chaptitlefont \hspace{1.6cm}\parbox{\textwidth-1.8cm}{##1} \thispagestyle{empty}}
+    \newpage
 }
 \makeatother
-\chapterstyle{RedBookmark}
+
+\makechapterstyle{GreyPage}{
+  \openany
+
+  \setlength{\afterchapskip}{28pt}
+  \renewcommand*{\printchaptername}{}
+  %\renewcommand*{\printchaptername}{\qquad \raisebox{-40pt}[10pt][10pt]{\Large\bfseries Chapter}}
+  \renewcommand*{\chapnumfont}{\color{white}\normalfont\fontsize{84}{88}\bfseries}
+  \renewcommand*{\printchapternum}{
+
+    \begin{tikzpicture}[remember picture, overlay]
+%      \draw[fill,color=black] (0,0) rectangle (2.5cm,14cm);
+%      \draw[color=white] (1.25cm,1.25cm)  node { \chapnumfont\thechapter };
+        \node [xshift=-.5cm,yshift=-1cm,anchor=north east] at (current page.north east) {
+        \chapnumfont\thechapter };
+
+
+
+    \end{tikzpicture}
+  }
+  \renewcommand*{\chaptitlefont}{\normalfont\Huge\bfseries}
+  %\renewcommand*{\printchaptertitle}[1]{\chaptitlefont\flushleft  \parbox[t]{\textwidth}{ \raggedright ##1}}
+  \renewcommand*{\printchaptertitle}[1]{\vspace{1cm}\raggedright\chaptitlefont\parbox[t]{\textwidth-1cm}{\color{white} \raggedright##1}
+      \pagecolor{numbercolor}   \thispagestyle{empty}}
+
+}
+
+\chapterstyle{appleChap}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -192,14 +278,14 @@
 
 %%SECTION STYLE
 \newcommand{\appleSec}[1]{%
-  \noindent\color{lightblue}%
+  \noindent
   \parbox[t]{\textwidth}{%
-    \ifthenelse{\boolean{BDnD}}{\fontspec{DnDLolth}}{}\large\color{red}\bfseries #1\vskip1em%
+    \ifthenelse{\boolean{BDnD}}{\fontspec{DnDLolth}}{}\large\color{appleblue}\bfseries #1%\vskip1em%
   }
 }
 \setsecheadstyle{\appleSec}
-\setaftersecskip{-\onelineskip}
-
+%\setaftersecskip{\onelineskip}
+\addtolength{\aftersecskip}{-1ex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 
@@ -211,61 +297,13 @@
 \newcommand{\blacsubsec}[1]{%
   \noindent%
   \parbox[t]{\textwidth}{%
-    \quad \ifthenelse{\boolean{BDnD}}{\fontspec{DnDLolth}}{}\large\bfseries #1\vskip1em%
+    \quad \ifthenelse{\boolean{BDnD}}{\fontspec{DnDLolth}}{}\large\bfseries #1%\vskip1em%
   }
-\setaftersubsecskip{-\onelineskip}
+%\setaftersubsecskip{-\onelineskip}
 
 }
 \setsubsecheadstyle{\blacsubsec}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 
-%% MARK: Title Page Definitions
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\makeatletter
-\def\@subtitle{\relax}
-\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
-
-\newcommand{\cover}{}
-
-
-% Command creating a title page
-\renewcommand{\maketitle}{
-\begin{titlingpage}
-\begin{tikzpicture}[remember picture, overlay]
-    % Show Title
-    \node [xshift=0cm,yshift=2cm,text width=.9\textwidth,anchor=south east] at (current page.east) {
-        %\fontspec{Meta Black Roman}
-        {\fontsize{22}{0} \ifthenelse{\boolean{BDnD}}{\fontspec{DnDLolth}}{} \bfseries\color{black} \thetitle }\\ \vspace{2ex}
-        {\fontsize{16}{0} \ifthenelse{\boolean{BDnD}}{\fontspec{DnDLolth}}{} \bfseries\color{black!20} \if\@subtitle\relax\else\@subtitle\par\fi }
-    };
-
-    %Show logo
-    \node [xshift=0cm,yshift=2cm,inner sep=0pt,anchor=south] at (current page.south)
-	{
-        %\switch to using \IfFileExists
-        \cover
-	};
-
-    %Show Authors
-	\node [xshift=.2cm, yshift=0.2cm,text width=9cm,anchor=south] at (current page.south)
-	{
-            {\color{appleblue}\ifthenelse{\boolean{BDnD}}{\fontspec{DnDLolth}}{} \large Authors}\\
-            {\color{black!40} \ifthenelse{\boolean{BDnD}}{\fontspec{DnDLolth}}{} \theauthor}
-	};
-
-    %Show Date
-	\node [xshift=3.7cm, yshift=.2cm,text width=4cm,anchor=south] at (current page.south)
-	{
-			%\fontspec{Meta Medium Roman}
-            \color{black!30}\bfseries\small
-            \thedate
-	};
-
-\end{tikzpicture}
-\end{titlingpage}
-}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -322,7 +360,7 @@
 \newcommand{\enhanc}[1]{\noindent{\textbf{Enhancement:} #1} \\}
 \newcommand{\crit}[1]{\noindent{\textbf{Critical:} #1} \\}
 \newcommand{\prop}[1]{\noindent{\textbf{Property:} #1} \\}
-\newcommand{\ipower}[3]{\noindent{\textbf{Power (#1)$~\diamond~$ #2:} #3} \\}
+\newcommand{\ipower}[3]{\noindent{\textbf{Power (#1)$\diamond$ #2:} #3} \\}
 \newcommand{\slot}[1]{\noindent{\textbf{Item Slot:} #1} \\}
 %\newcommand{\uses}[1]{\noindent{\textbf{Number of Uses:} #1} \\}
 
@@ -348,8 +386,8 @@
 \newcommand{\stats}[9]{
     \newline
     \colorbox{mgreen}{ \color{black}{\parbox{78mm}{
-        \Bold{HP~} #1; \Bold{Bloodied~}#2 \hspace{\stretch{6}} \Bold{Initiative~+}#3 \newline
-        \Bold{AC~} #4; \Bold{Fort~}#5, \Bold{Ref~}#6, \Bold{Will~}#7,  \newline
+        \Bold{HP } #1; \Bold{Bloodied }#2 \hspace{\stretch{6}} \Bold{Initiative +}#3 \newline
+        \Bold{AC } #4; \Bold{Fort }#5, \Bold{Ref }#6, \Bold{Will }#7,  \newline
         \Bold{Speed~}#9 \hspace{\stretch{6}} \Bold{Perception~}#8
     }%END parbox
     }}%END colorbox
